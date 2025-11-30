@@ -81,6 +81,11 @@ public typealias StoreTransaction = com.revenuecat.purchases.kmp.models.StoreTra
 public typealias KotlinBoolean = Bool
 public typealias KotlinUnit = Unit
 public typealias LogLevel = com.revenuecat.purchases.kmp.LogLevel
+#elseif SKIP_BRIDGE
+// Skip Fuse native mode - Swift compiled for Android
+// RevenueCat functionality is handled on the Kotlin side
+// These are placeholder types for compilation
+@_exported import SkipRevenueCatLibrary
 #endif
 
 #if os(iOS) || SKIP
