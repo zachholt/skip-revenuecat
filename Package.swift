@@ -28,9 +28,9 @@ let package = Package(
             name: "SkipRevenueCat",
             dependencies: [
                 .product(name: "SkipFoundation", package: "skip-foundation"),
-                .product(name: "PurchasesHybridCommon", package: "purchases-hybrid-common"),
-                .product(name: "PurchasesHybridCommonUI", package: "purchases-hybrid-common"),
-                "SkipRevenueCatLibrary",
+                .product(name: "PurchasesHybridCommon", package: "purchases-hybrid-common", condition: .when(platforms: [.iOS, .macOS])),
+                .product(name: "PurchasesHybridCommonUI", package: "purchases-hybrid-common", condition: .when(platforms: [.iOS, .macOS])),
+                .target(name: "SkipRevenueCatLibrary", condition: .when(platforms: [.iOS, .macOS])),
             ],
             exclude: [
                 "../../skip-revenuecat-library/",
