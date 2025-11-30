@@ -83,9 +83,65 @@ public typealias KotlinUnit = Unit
 public typealias LogLevel = com.revenuecat.purchases.kmp.LogLevel
 #elseif SKIP_BRIDGE
 // Skip Fuse native mode - Swift compiled for Android
-// RevenueCat functionality is handled on the Kotlin side
-// These are placeholder types for compilation
-@_exported import SkipRevenueCatLibrary
+// RevenueCat functionality is handled on the Kotlin side via transpiled code
+// These are stub types for Swift compilation - actual functionality comes from Kotlin
+
+public struct CustomerInfo {
+    public var entitlements: [String: EntitlementInfo] = [:]
+}
+
+public struct EntitlementInfo {
+    public var isActive: Bool = false
+}
+
+public struct Offerings {}
+public struct StoreProduct {}
+public struct StoreTransaction {}
+public struct PurchasesError: Error {
+    public var message: String = ""
+    public var underlyingErrorMessage: String? = nil
+}
+
+public enum LogLevel {
+    case debug, error, info, verbose, warn
+    public static var DEBUG: LogLevel { .debug }
+    public static var ERROR: LogLevel { .error }
+    public static var INFO: LogLevel { .info }
+    public static var VERBOSE: LogLevel { .verbose }
+    public static var WARN: LogLevel { .warn }
+}
+
+public protocol PurchasesDelegate: AnyObject {
+    func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo)
+}
+
+public class Purchases {
+    public static var sharedInstance: Purchases = Purchases()
+    public static var logLevel: LogLevel = .debug
+
+    public weak var delegate: PurchasesDelegate?
+
+    public static func configure(apiKey: String, builder: @escaping (PurchasesConfiguration.Builder) -> Void = {_ in }) {
+        // Configuration handled on Kotlin side
+    }
+
+    public func getOfferings(onError: @escaping (PurchasesError) -> Void, onSuccess: @escaping (Offerings) -> Void) {
+        // Handled on Kotlin side
+    }
+
+    public func restorePurchases(onError: @escaping (PurchasesError) -> Void, onSuccess: @escaping (CustomerInfo) -> Void) {
+        // Handled on Kotlin side
+    }
+}
+
+public struct PurchasesConfiguration {
+    public struct Builder {
+        public init() {}
+    }
+}
+
+public typealias KotlinBoolean = Bool
+public typealias KotlinUnit = Void
 #endif
 
 #if os(iOS) || SKIP
