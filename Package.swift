@@ -21,15 +21,15 @@ let package = Package(
     dependencies: [
         .package(url: "https://source.skip.tools/skip.git", from: "1.6.8"),
         .package(url: "https://source.skip.tools/skip-foundation.git", from: "1.3.8"),
-        .package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "15.0.0"),
+        .package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "17.21.1"),
     ],
     targets: [
         .target(
             name: "SkipRevenueCat",
             dependencies: [
                 .product(name: "SkipFoundation", package: "skip-foundation"),
-                .product(name: "PurchasesHybridCommon", package: "purchases-hybrid-common"),
-                .product(name: "PurchasesHybridCommonUI", package: "purchases-hybrid-common"),
+                .product(name: "PurchasesHybridCommon", package: "purchases-hybrid-common", condition: .when(platforms: [.iOS, .macOS])),
+                .product(name: "PurchasesHybridCommonUI", package: "purchases-hybrid-common", condition: .when(platforms: [.iOS, .macOS])),
                 "SkipRevenueCatLibrary",
             ],
             exclude: [
