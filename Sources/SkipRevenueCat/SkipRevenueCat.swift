@@ -83,11 +83,18 @@ public typealias KotlinUnit = Unit
 public typealias LogLevel = com.revenuecat.purchases.kmp.LogLevel
 #elseif SKIP_BRIDGE
 // Skip Fuse native mode - Swift compiled for Android
-// RevenueCat functionality is handled on the Kotlin side via transpiled code
-// These are stub types for Swift compilation - actual functionality comes from Kotlin
+// For full Android RevenueCat support in native mode, handle RevenueCat
+// initialization and calls in your app's Kotlin/transpiled code layer.
+// These are stub types that allow Swift code to compile for Android.
 
+/// Customer info stub for SKIP_BRIDGE mode
 public struct CustomerInfo {
+    public var isPremium: Bool = false
     public var entitlements: [String: EntitlementInfo] = [:]
+
+    public init(isPremium: Bool = false) {
+        self.isPremium = isPremium
+    }
 }
 
 public struct EntitlementInfo {
@@ -115,6 +122,8 @@ public protocol PurchasesDelegate: AnyObject {
     func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo)
 }
 
+/// RevenueCat stub for Skip Fuse native mode
+/// Note: For full Android support, handle RevenueCat in your transpiled Kotlin layer
 public class Purchases {
     public static var sharedInstance: Purchases = Purchases()
     public static var logLevel: LogLevel = .debug
@@ -122,15 +131,18 @@ public class Purchases {
     public weak var delegate: PurchasesDelegate?
 
     public static func configure(apiKey: String, builder: @escaping (PurchasesConfiguration.Builder) -> Void = {_ in }) {
-        // Configuration handled on Kotlin side
+        // Stub - implement in Kotlin layer for Android
+        print("RevenueCat configure called (SKIP_BRIDGE stub)")
     }
 
     public func getOfferings(onError: @escaping (PurchasesError) -> Void, onSuccess: @escaping (Offerings) -> Void) {
-        // Handled on Kotlin side
+        // Stub - implement in Kotlin layer for Android
+        onSuccess(Offerings())
     }
 
     public func restorePurchases(onError: @escaping (PurchasesError) -> Void, onSuccess: @escaping (CustomerInfo) -> Void) {
-        // Handled on Kotlin side
+        // Stub - implement in Kotlin layer for Android
+        onSuccess(CustomerInfo())
     }
 }
 
